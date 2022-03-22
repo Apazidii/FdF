@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:31:59 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/10 01:59:47 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:33:31 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_params
 	double	angle_y;
 	int		tran_x;
 	int		tran_y;
+	float 	kz;
+	int 	default_color;
 }					t_params;
 
 typedef struct s_mouse
@@ -68,7 +70,7 @@ typedef struct s_base
 	int			size_y;
 	int			max;
 	int			min;
-	int			proj;
+	int			color_change;
 	int			color_detected;
 
 	void		*mlx;
@@ -93,6 +95,7 @@ int		ft_inwin_x(float a);
 int		ft_inwin_y(float a);
 void	max_in_matrix(t_base *base);
 int		atoi_hex(char *s, int *f);
+int		is_duplicate(int k);
 
 //draw
 void	my_mlx_pixel_put(t_base *data, int x, int y, int color);
@@ -118,10 +121,15 @@ int		mouse_down(int button, int x, int y, t_base *base);
 int		mouse_up(int button, int x, int y, t_base *base);
 int		mouse_move(int x, int y, t_base *base);
 void	zoom(int key, t_base *base);
-int expose(t_base *base);
+void	trans(int key, t_base *base);
+void	koef_z(int key, t_base *base);
+void	project(int key, t_base *base);
+void	angle(int key, t_base *base);
+int		expose(t_base *base);
 
 //parse
 void	parse(t_base *base, char *file_path);
+int		valid_map(char *file_path);
 
 //errors
 void	error_exit(char *s);
@@ -129,6 +137,7 @@ void	exit_errno(void);
 
 //free
 void	free_all(t_base *base);
-void	free_base(t_base *base);
+void	free_matrix(t_base *base);
+void	free_split(char **arr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:13:51 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/12 23:38:12 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/13 19:23:48 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,13 @@ void	rotate(t_point *p, t_base *r)
 	double		z;
 
 	x = p->x;
-	z = p->z ;
+	z = p->z / r->params.kz;
 	v.x = (float)(cos(r->params.angle_y) * x + sin(r->params.angle_y) * z);
 	v.z = (float)(-sin(r->params.angle_y) * x + cos(r->params.angle_y) * z);
 	y = p->y;
 	z = v.z;
 	v.y = (float)(cos(r->params.angle_x) * y - \
 				sin(r->params.angle_x) * z);
-	v.z = (float)(sin(r->params.angle_x) * y + cos(r->params.angle_x) * z);
 	v.color = p->color;
 	*p = v;
-}
-
-void	rotate2(t_point *p, t_base *base)
-{
-	p->x = p->x + cos(base->params.angle_y) * p->z;
-	p->y = p->y + sin(base->params.angle_x) * p->z;
 }

@@ -66,3 +66,19 @@ void	max_in_matrix(t_base *base)
 		i++;
 	}
 }
+
+int is_duplicate(int k)
+{
+	static int f;
+	static int l;
+
+	if (!f)
+	{
+		l = k;
+		f = 1;
+	}
+	if (k == l)
+		return (1);
+	return (0);
+}
+

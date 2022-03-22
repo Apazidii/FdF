@@ -45,7 +45,5 @@ int	mouse_move(int x, int y, t_base *base)
 		base->params.angle_y += (base->mouse.x - x) * 0.005;
 	base->mouse.x = x;
 	base->mouse.y = y;
-	mlx_destroy_image(base->mlx, base->img);
-	render(base);
 	return (0);
 }

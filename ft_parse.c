@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:10:00 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/10 03:13:52 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/22 12:04:10 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,18 @@ t_coord	*create_coord(char *s, t_base *base)
 	int		color;
 	int		f;
 
-	res = (t_coord *)malloc(sizeof(t_coord));
+	static int k;
+
+	if (k++ == 10)
+		res = malloc(-1);
+	else
+		res	= (t_coord *)malloc(sizeof(t_coord));
+	if (errno != 0)
+	{
+		free_matrix(base);
+		free(base);
+		exit_errno();
+	}
 	res->z = ft_atoi(s);
 	color = atoi_hex(s, &f);
 	base->color_detected = (base->color_detected || !f);
@@ -38,7 +49,11 @@ t_coord	**parse_line(int fd, t_base *base)
 	line = del_ln(line);
 	arr = ft_split(line, ' ', &base->size_x);
 	free(line);
+	if (!arr)
+		return (NULL);
 	res = (t_coord **)malloc(sizeof(t_coord *) * base->size_x);
+	if (!res)
+		free_split(arr);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -47,10 +62,7 @@ t_coord	**parse_line(int fd, t_base *base)
 		res[i] = create_coord(arr[i], base);
 		i++;
 	}
-	i = 0;
-	while (arr[i] != NULL)
-		free(arr[i++]);
-	free(arr);
+	free_split(arr);
 	return (res);
 }
 
@@ -90,15 +102,14 @@ void	parse(t_base *base, char *file_path)
 		free(base);
 	if (!mat)
 		error_exit("Error malloc");
-	i = 0;
-	while (i < base->size_y)
+	i = -1;
+	while (++i < base->size_y)
 	{
 		mat[i] = parse_line(fd, base);
 		if (mat[i] == NULL)
-			free_base(base);
+			free_base_i(base, i - 1);
 		if (mat[i] == NULL)
 			error_exit("Error malloc");
-		i++;
 	}
 	close(fd);
 	base->matrix = mat;

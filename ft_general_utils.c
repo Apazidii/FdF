@@ -6,12 +6,11 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:18:34 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/10 03:06:21 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/14 13:23:43 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <mlx.h>
 
 void	render(t_base *base)
 {

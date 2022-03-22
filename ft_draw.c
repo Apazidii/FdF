@@ -6,12 +6,11 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:10:23 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/13 12:06:48 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/14 12:31:18 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <mlx.h>
 
 void	my_mlx_pixel_put(t_base *base, int x, int y, int color)
 {
@@ -21,8 +20,6 @@ void	my_mlx_pixel_put(t_base *base, int x, int y, int color)
 	if (dst - base->addr > 0)
 		*(unsigned int *)dst = color;
 }
-
-void rotate2(t_point *p, t_base *b);
 
 void	apply_params(t_base *base, t_point *p1, t_point *p2)
 {

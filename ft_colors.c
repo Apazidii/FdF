@@ -6,7 +6,7 @@
 /*   By: dgalactu <dgalactu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 20:06:29 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/03/10 03:26:36 by dgalactu         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:36:52 by dgalactu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,18 @@
 
 int	color_from_z(float z, t_base *base)
 {
-	int	pos;
-	int	all;
+	float	pos;
+	int r;
+	int g;
+	int b;
 
-	all = base->sum_coord;
-	pos = (int) z - (base->min);
-//	return (create_trgb(255, (int)(255 - (255 * ((float) pos / (float) all))), \
-//	(int)(255 - (255 * ((float) pos / (float) all))), 255));
-	return (create_trgb(255,(int)(255 - (255 * ((float) pos / (float) all))), 255,\
-	(int)(255 - (255 * ((float) pos / (float) all)))));
-
+	pos = (float) (z - (float)(base->min)) / (float) base->sum_coord;
+	return (create_color((int) 0xFFFFFFFF, base->params.default_color, pos));
 }
 
 int	color_from_coords(t_base *base, int x, int y)
 {
-	if (base->color_detected == 0)
+	if (base->color_detected == 0 || base->color_change > 0)
 		return (color_from_z((float) base->matrix[y][x]->z, base));
 	if (base->matrix[y][x]->color_defined)
 		return (create_trgb(255, (base->matrix[y][x]->color >> 16) & 0xFF, \
